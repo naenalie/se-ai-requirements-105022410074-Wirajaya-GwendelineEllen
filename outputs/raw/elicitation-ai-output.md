@@ -1,117 +1,111 @@
-﻿# Requirements Elicitation: Student Task Management System
-*(Raw AI Output — belum dikoreksi oleh mahasiswa)*
-
----
+# Requirements Elicitation: Student Task Management System
 
 ## 1. Teknik Elisitasi yang Digunakan
-
-- **Wawancara Terstruktur**: Digunakan karena sistem ini melibatkan tiga kelompok stakeholder dengan peran yang sangat berbeda (dosen, mahasiswa, administrator). Wawancara terstruktur memungkinkan penggalian kebutuhan mendalam dan spesifik dari masing-masing peran melalui pertanyaan yang disiapkan terlebih dahulu, sehingga tidak ada aspek penting yang terlewat.
-
-- **Analisis Dokumen**: Digunakan untuk meninjau catatan awal stakeholder (`inputs/stakeholder-notes.md`), jawaban wawancara awal (`inputs/interview-answers.md`), dan dokumen deskripsi kasus (`CASE.md`). Teknik ini efisien untuk mengekstrak kebutuhan yang sudah pernah diungkapkan sebelumnya tanpa perlu mengadakan sesi wawancara berulang.
-
----
+- **Wawancara Terstruktur**: Digunakan untuk berdiskusi secara mendalam dengan perwakilan dosen, mahasiswa, dan administrator kampus guna memahami tantangan operasional dan harapan mereka terhadap sistem baru.
+- **Analisis Dokumen**: Mengkaji dokumen awal studi kasus ([CASE.md](file:///C:/Users/User/.gemini/antigravity/scratch/se-ai-requirements/CASE.md)), catatan kebutuhan stakeholder ([inputs/stakeholder-notes.md](file:///C:/Users/User/.gemini/antigravity/scratch/se-ai-requirements/inputs/stakeholder-notes.md)), serta draf asumsi proyek ([inputs/assumptions.md](file:///C:/Users/User/.gemini/antigravity/scratch/se-ai-requirements/inputs/assumptions.md)).
 
 ## 2. Panduan Pertanyaan Wawancara
-
 ### A. Untuk Dosen
-
-1. Bagaimana proses Anda saat ini dalam mendistribusikan tugas kepada mahasiswa?
-2. Informasi apa saja yang ingin Anda cantumkan saat membuat tugas baru (deskripsi, tenggat waktu, bobot nilai, lampiran)?
-3. Bagaimana Anda saat ini memantau siapa saja yang sudah dan belum mengumpulkan tugas?
-4. Bagaimana cara Anda memberikan nilai dan umpan balik saat ini, dan apa kelemahannya?
-5. Notifikasi apa saja yang Anda butuhkan dari sistem (misalnya: ada yang terlambat, ada yang mengumpulkan ulang)?
-6. Apakah Anda perlu kemampuan untuk memperpanjang tenggat waktu untuk mahasiswa tertentu secara individual?
+1. Bagaimana cara Anda memberikan umpan balik dan nilai kepada mahasiswa saat ini?
+2. Berapa banyak rata-rata tugas yang Anda buat untuk setiap mata kuliah dalam satu semester?
+3. [SIMULATED] Bagaimana cara pembuatan tugas yang Anda harapkan agar efisien di sistem baru?
+4. [SIMULATED] Pemberitahuan/notifikasi apa saja yang Anda perlukan terkait status pengumpulan mahasiswa?
+5. [SIMULATED] Bagaimana kebijakan penutupan tugas setelah tenggat waktu berakhir?
 
 ### B. Untuk Mahasiswa
-
-1. Bagaimana Anda saat ini mengetahui informasi tugas yang diberikan dosen?
-2. Apa kesulitan terbesar Anda dalam proses pengumpulan tugas saat ini?
-3. Format file apa saja yang biasanya Anda kumpulkan sebagai tugas?
-4. Apakah Anda membutuhkan konfirmasi bahwa tugas Anda berhasil diterima sistem?
-5. Pengingat seperti apa yang Anda harapkan dari sistem (H-1, H-3, atau berdasarkan preferensi)?
-6. Apakah Anda perlu bisa melihat nilai dan umpan balik dosen langsung di sistem?
+1. Apa kesulitan terbesar yang Anda hadapi dalam memantau dan mengumpulkan tugas kuliah saat ini?
+2. Format file apa saja yang biasa Anda kumpulkan untuk tugas perkuliahan?
+3. [SIMULATED] Bagaimana Anda ingin diingatkan tentang tenggat waktu tugas yang mendekat?
+4. [SIMULATED] Bukti atau tanda terima seperti apa yang Anda butuhkan setelah mengunggah tugas?
+5. [SIMULATED] Perangkat apa yang paling sering Anda gunakan untuk mengakses informasi perkuliahan?
 
 ### C. Untuk Administrator
+1. Bagaimana proses pengelolaan data dosen, mahasiswa, dan mata kuliah saat ini?
+2. [SIMULATED] Bagaimana kemudahan konfigurasi sistem yang Anda butuhkan tanpa harus mengubah kode program?
+3. [SIMULATED] Tindakan pengguna apa saja yang perlu dilacak demi menjaga integritas data?
 
-1. Bagaimana proses pengelolaan data pengguna (dosen dan mahasiswa) dilakukan saat ini?
-2. Apakah Anda perlu mengimpor data pengguna secara massal (misalnya dari file spreadsheet)?
-3. Laporan seperti apa yang Anda butuhkan dari sistem (aktivitas tugas, statistik pengumpulan)?
-4. Pengaturan sistem apa saja yang perlu dapat Anda ubah tanpa bantuan developer?
-5. Apakah Anda membutuhkan log aktivitas pengguna untuk keperluan audit keamanan?
+### D. Untuk Institusi/Manajemen Kampus
+1. [SIMULATED] Apa standar keamanan data akademik yang wajib dipenuhi oleh aplikasi ini?
+2. [SIMULATED] Laporan evaluasi seperti apa yang Anda harapkan untuk menunjang audit mutu pembelajaran?
+3. [SIMULATED] Berapa batas minimum toleransi keandalan (uptime) sistem yang diperbolehkan?
 
----
-
-## 3. Catatan Temuan Wawancara
-
+## 3. Catatan Temuan Wawancara (Disimulasikan)
 ### A. Jawaban Dosen (Perwakilan: Dr. Andrew)
-
-- **Proses distribusi tugas saat ini**: Biasanya mengirim tugas melalui grup WhatsApp atau email massal. Tidak efisien karena sering ada mahasiswa yang mengaku tidak menerima informasi.
-- **Cara memberikan umpan balik**: *J: Biasanya saya menulis catatan di kertas tugas mahasiswa, atau mengirimkan email satu per satu. Sangat tidak praktis. Saya ingin bisa mengetikkan umpan balik langsung di samping nilai mahasiswa di aplikasi.* (Sumber: `interview-answers.md`)
-- **Jumlah tugas per semester**: *J: Sekitar 4 hingga 6 tugas per mata kuliah.* (Sumber: `interview-answers.md`)
-- **Kebutuhan notifikasi**: [SIMULATED] Dosen menginginkan notifikasi email atau in-app ketika ada mahasiswa yang belum mengumpulkan tugas saat tenggat waktu sudah H-1.
-- **Perpanjangan tenggat waktu**: [SIMULATED] Dosen menginginkan kemampuan untuk memperpanjang tenggat waktu untuk satu atau beberapa mahasiswa tertentu tanpa harus mengubah tenggat waktu global untuk seluruh kelas.
+- **Umpan balik saat ini**: Biasanya saya menulis catatan di kertas tugas mahasiswa, atau mengirimkan email satu per satu. Sangat tidak praktis. Saya ingin bisa mengetikkan umpan balik langsung di samping nilai mahasiswa di aplikasi. (Sumber: [inputs/interview-answers.md](file:///C:/Users/User/.gemini/antigravity/scratch/se-ai-requirements/inputs/interview-answers.md))
+- **Volume tugas**: Sekitar 4 hingga 6 tugas per mata kuliah. (Sumber: [inputs/interview-answers.md](file:///C:/Users/User/.gemini/antigravity/scratch/se-ai-requirements/inputs/interview-answers.md))
+- **Proses pembuatan tugas**: [SIMULATED] Saya ingin proses pembuatan tugas yang cepat tanpa melalui terlalu banyak klik di antarmuka sistem. (Sumber: [inputs/stakeholder-notes.md](file:///C:/Users/User/.gemini/antigravity/scratch/se-ai-requirements/inputs/stakeholder-notes.md))
+- **Notifikasi**: [SIMULATED] Saya memerlukan notifikasi pemberitahuan ketika ada mahasiswa yang terlambat mengumpulkan tugas melewati tenggat. (Sumber: [inputs/stakeholder-notes.md](file:///C:/Users/User/.gemini/antigravity/scratch/se-ai-requirements/inputs/stakeholder-notes.md))
+- **Penutupan tugas**: [SIMULATED] Sistem harus secara otomatis menutup penerimaan tugas setelah tenggat waktu berakhir agar adil. (Sumber: [inputs/stakeholder-notes.md](file:///C:/Users/User/.gemini/antigravity/scratch/se-ai-requirements/inputs/stakeholder-notes.md))
 
 ### B. Jawaban Mahasiswa (Perwakilan: Budi)
-
-- **Cara mengetahui informasi tugas**: *J: Sering lupa kapan tepatnya deadline karena harus cek di grup chat yang tertumpuk. Saya butuh halaman khusus yang menampilkan seluruh daftar tugas yang belum dikerjakan beserta sisa harinya.* (Sumber: `interview-answers.md`)
-- **Format file yang dikumpulkan**: *J: Sebagian besar PDF dan berkas ZIP untuk tugas pemrograman.* (Sumber: `interview-answers.md`)
-- **Konfirmasi pengumpulan**: [SIMULATED] Mahasiswa sangat membutuhkan bukti tanda terima digital berupa notifikasi atau halaman konfirmasi yang dapat di-screenshot sebagai bukti pengumpulan.
-- **Preferensi pengingat**: [SIMULATED] Pengingat otomatis 3 hari dan 1 hari sebelum tenggat waktu dianggap ideal oleh mahasiswa.
-- **Kebutuhan akses nilai**: [SIMULATED] Mahasiswa ingin dapat melihat nilai dan umpan balik dosen langsung di halaman detail tugas, bukan harus menerima email terpisah.
+- **Kesulitan melacak tugas**: Sering lupa kapan tepatnya deadline karena harus cek di grup chat yang tertumpuk. Saya butuh halaman khusus yang menampilkan seluruh daftar tugas yang belum dikerjakan beserta sisa harinya. (Sumber: [inputs/interview-answers.md](file:///C:/Users/User/.gemini/antigravity/scratch/se-ai-requirements/inputs/interview-answers.md))
+- **Format file pengumpulan**: Sebagian besar PDF dan berkas ZIP untuk tugas pemrograman. (Sumber: [inputs/interview-answers.md](file:///C:/Users/User/.gemini/antigravity/scratch/se-ai-requirements/inputs/interview-answers.md))
+- **Pengingat tenggat waktu**: [SIMULATED] Saya menginginkan adanya pengingat (reminder) otomatis sebelum tenggat waktu tugas berakhir agar saya tidak terlambat. (Sumber: [inputs/stakeholder-notes.md](file:///C:/Users/User/.gemini/antigravity/scratch/se-ai-requirements/inputs/stakeholder-notes.md))
+- **Tanda terima digital**: [SIMULATED] Saya membutuhkan bukti tanda terima digital setelah berhasil mengunggah file untuk menghindari hilangnya data pengumpulan. (Sumber: [inputs/stakeholder-notes.md](file:///C:/Users/User/.gemini/antigravity/scratch/se-ai-requirements/inputs/stakeholder-notes.md))
+- **Akses perangkat**: [SIMULATED] Antarmuka aplikasi harus ramah pengguna dan responsif saat diakses lewat handphone. (Sumber: [inputs/stakeholder-notes.md](file:///C:/Users/User/.gemini/antigravity/scratch/se-ai-requirements/inputs/stakeholder-notes.md))
 
 ### C. Jawaban Administrator (Perwakilan: Ibu Sari)
+- **Pengelolaan data saat ini**: Kami memasukkan data secara manual lewat sistem terpisah. Kami sangat terbantu jika sistem baru ini nanti bisa melakukan sinkronisasi data atau mengizinkan impor massal lewat format CSV [ASSUMPTION]. (Sumber: [inputs/interview-answers.md](file:///C:/Users/User/.gemini/antigravity/scratch/se-ai-requirements/inputs/interview-answers.md))
+- **Konfigurasi sistem**: [SIMULATED] Sistem harus mudah dikonfigurasi tanpa harus mengubah kode program oleh staf administrasi non-teknis. (Sumber: [inputs/stakeholder-notes.md](file:///C:/Users/User/.gemini/antigravity/scratch/se-ai-requirements/inputs/stakeholder-notes.md))
+- **Integritas data**: [SIMULATED] Kami sangat membutuhkan log aktivitas yang mencatat siapa yang mengunggah file atau mengubah nilai untuk keperluan audit integritas data. (Sumber: [inputs/stakeholder-notes.md](file:///C:/Users/User/.gemini/antigravity/scratch/se-ai-requirements/inputs/stakeholder-notes.md))
 
-- **Pengelolaan mata kuliah saat ini**: *J: Kami memasukkan data secara manual lewat sistem terpisah. Kami sangat terbantu jika sistem baru ini nanti bisa melakukan sinkronisasi data atau mengizinkan impor massal lewat format CSV.* (Sumber: `interview-answers.md`)
-- **Log aktivitas**: [SIMULATED] Administrator membutuhkan log yang mencatat siapa yang mengunggah file, kapan, dari IP mana, serta siapa yang mengubah nilai dan kapan perubahan dilakukan.
-- **Pengaturan tanpa kode**: [SIMULATED] Administrator ingin dapat mengubah pengaturan sistem seperti ukuran maksimal file, format file yang diterima, dan periode pelaporan melalui antarmuka panel admin, bukan dengan mengedit konfigurasi server.
-
----
+### D. Jawaban Institusi/Manajemen Kampus (Disimulasikan)
+- **Keamanan data**: [SIMULATED] Sistem wajib menerapkan standar keamanan data akademik kampus yang kokoh untuk melindungi data nilai dan kerahasiaan berkas mahasiswa.
+- **Laporan evaluasi**: [SIMULATED] Kami memerlukan laporan ringkas rekap aktivitas tugas perkuliahan untuk melakukan audit mutu dan evaluasi berkala proses pembelajaran.
+- **Keandalan sistem**: [SIMULATED] Keandalan (uptime) sistem harus tinggi guna mencegah kegagalan sistem saat puncak pengumpulan tugas mahasiswa di akhir masa tenggat.
 
 ## 4. Kebutuhan Eksplisit dan Implisit per Stakeholder
-
 ### A. Kebutuhan Dosen
-
 - **Eksplisit**:
-  - Dosen membutuhkan kemampuan untuk membuat tugas baru dengan deskripsi, tenggat waktu, dan bobot nilai.
-  - Dosen membutuhkan fasilitas untuk mengetikkan umpan balik dan nilai langsung di sistem.
-  - Dosen membutuhkan notifikasi ketika ada mahasiswa yang terlambat mengumpulkan tugas.
-
+  - Dosen dapat membuat tugas secara cepat [ASSUMPTION].
+  - Dosen dapat menetapkan tenggat waktu (deadline) tugas.
+  - Dosen dapat memberikan nilai secara digital di sistem.
+  - Dosen dapat memberikan umpan balik secara digital di samping nilai mahasiswa.
+  - Dosen dapat menerima notifikasi otomatis jika ada mahasiswa yang terlambat mengumpulkan tugas [ASSUMPTION].
+  - Sistem menutup penerimaan tugas secara otomatis setelah tenggat waktu berakhir [ASSUMPTION].
 - **Implisit**:
-  - Sistem harus menyediakan halaman rekap status pengumpulan per tugas yang menampilkan siapa sudah dan belum mengumpulkan.
-  - Sistem harus mendukung kemampuan perpanjangan tenggat waktu secara individual per mahasiswa.
-  - Sistem harus menutup penerimaan tugas secara otomatis setelah tenggat waktu berakhir (kecuali dosen mengaktifkan perpanjangan).
+  - Sistem harus menyediakan penanda status keterlambatan (late flag) otomatis pada tugas yang dikumpulkan melewati deadline.
+  - Sistem harus menyediakan tombol aksi penyerahan nilai yang bersifat final dan langsung memicu notifikasi pembaruan ke mahasiswa.
 
 ### B. Kebutuhan Mahasiswa
-
 - **Eksplisit**:
-  - Mahasiswa membutuhkan halaman dashboard yang menampilkan daftar tugas aktif beserta sisa waktu tenggat.
-  - Mahasiswa membutuhkan kemampuan mengunggah berkas dalam format PDF dan ZIP.
-  - Mahasiswa membutuhkan bukti tanda terima digital setelah pengumpulan berhasil.
-  - Mahasiswa membutuhkan pengingat otomatis sebelum tenggat waktu berakhir.
-
+  - Mahasiswa dapat melihat tugas aktif beserta sisa hari deadline di halaman khusus.
+  - Mahasiswa dapat mengunggah file tugas dengan format PDF dan ZIP.
+  - Mahasiswa dapat memantau status tugas mereka.
+  - Mahasiswa dapat memantau deadline tugas.
+  - Mahasiswa menerima pengingat otomatis sebelum deadline berakhir [ASSUMPTION].
+  - Mahasiswa menerima bukti tanda terima digital setelah berhasil mengunggah file [ASSUMPTION].
+  - Antarmuka harus dapat diakses dengan baik lewat perangkat mobile [ASSUMPTION].
 - **Implisit**:
-  - Sistem harus menyediakan antarmuka yang responsif dan dapat diakses melalui perangkat mobile.
-  - Sistem harus menampilkan nilai dan umpan balik dosen di halaman detail tugas setelah penilaian selesai.
-  - Sistem harus mencegah pengumpulan ganda yang tidak disengaja dengan menampilkan status pengumpulan yang jelas.
+  - Sistem harus melakukan validasi format file saat proses unggah untuk memblokir ekstensi di luar `.pdf` dan `.zip`.
+  - Sistem harus membatasi ukuran file agar tidak melebihi kapasitas memori server yang dialokasikan.
 
 ### C. Kebutuhan Administrator
-
 - **Eksplisit**:
-  - Administrator membutuhkan modul impor data pengguna massal melalui format CSV.
-  - Administrator membutuhkan log aktivitas sistem untuk keperluan audit.
-  - Administrator membutuhkan panel konfigurasi sistem tanpa perlu mengubah kode program.
-
+  - Administrator dapat mengelola data pengguna (dosen, mahasiswa, admin) secara digital.
+  - Administrator dapat mengelola data mata kuliah secara digital.
+  - Administrator dapat mengelola konfigurasi sistem secara digital.
+  - Administrator dapat mengimpor data massal melalui berkas format CSV [ASSUMPTION].
+  - Administrator dapat mengubah konfigurasi sistem tanpa mengubah kode program [ASSUMPTION].
+  - Administrator memiliki akses ke log aktivitas sistem untuk melacak aktivitas pengunggahan berkas atau pengubahan nilai demi integritas data [ASSUMPTION].
 - **Implisit**:
-  - Sistem harus memvalidasi format CSV saat impor data dan memberikan laporan kesalahan yang jelas jika ada data yang tidak valid.
-  - Log aktivitas harus menyimpan minimal informasi: waktu, identitas pengguna, jenis tindakan, dan data yang diubah.
-  - Panel konfigurasi harus mencakup pengaturan: ukuran file maksimal, format file yang diterima, dan batas waktu penyimpanan data.
+  - Sistem harus memvalidasi data CSV sebelum diimpor dan menampilkan daftar baris data yang gagal diproses akibat tidak valid.
+  - Log aktivitas harus tersimpan secara kronologis, tidak dapat diedit atau dihapus oleh siapa pun (read-only audit trail).
 
----
+### D. Kebutuhan Institusi/Manajemen Kampus
+- **Eksplisit**:
+  - Sistem harus memenuhi standar keamanan data akademik yang berlaku [ASSUMPTION].
+  - Sistem dapat menghasilkan laporan akademik aktivitas tugas untuk evaluasi kualitas proses pembelajaran [ASSUMPTION].
+  - Sistem memiliki keandalan (uptime) tinggi agar tidak mengganggu proses pembelajaran [ASSUMPTION].
+- **Implisit**:
+  - Sistem harus menggunakan protokol HTTPS terenkripsi untuk mencegah intersepsi nilai akademik mahasiswa.
+  - Sistem harus membatasi akses database nilai agar hanya dapat diakses melalui antarmuka aplikasi terotorisasi.
 
 ## 5. Pertanyaan Lanjutan (Open Questions)
-
-- [OPEN QUESTION] Apakah sistem harus mendukung perpanjangan tenggat waktu individual (per mahasiswa), dan jika ya, apakah dosen perlu memberikan alasan/catatan untuk setiap perpanjangan?
-- [OPEN QUESTION] Berapa lama log aktivitas harus disimpan oleh sistem sebelum diarsipkan atau dihapus?
-- [OPEN QUESTION] Apakah pengingat otomatis dikirim melalui email, notifikasi in-app, atau keduanya?
-- [OPEN QUESTION] Apakah mahasiswa dapat mengumpulkan ulang (resubmit) sebelum tenggat waktu berakhir, dan apakah setiap versi pengumpulan harus disimpan?
-- [OPEN QUESTION] Apakah nilai yang sudah diberikan oleh dosen dapat direvisi, dan jika ya, apakah revisi tersebut perlu disetujui oleh administrator?
+- [OPEN QUESTION] Platform apa yang akan digunakan — berbasis web (browser), aplikasi mobile native, atau keduanya (hybrid)?
+- [OPEN QUESTION] Apa metrik terukur yang ditetapkan untuk setiap kriteria kualitas non-fungsional (batas waktu respons, persentase uptime, standar enkripsi, kapasitas penyimpanan maksimal)?
+- [OPEN QUESTION] Apa format laporan akademik yang diharapkan oleh administrator dan manajemen kampus (format ekspor, periode pelaporan, jenis data yang ditampilkan)?
+- [OPEN QUESTION] Berapa batas ukuran file maksimal yang diizinkan untuk setiap pengumpulan tugas mahasiswa?
+- [OPEN QUESTION] Format nilai apa yang digunakan — angka (0–100), huruf (A–E), atau keduanya?
+- [OPEN QUESTION] Apakah sistem harus terintegrasi dengan database akademik kampus yang sudah ada (misalnya SSO atau sistem akademik lama)?
+- [OPEN QUESTION] Bagaimana mekanisme pendaftaran pengguna secara detail — apakah sinkronisasi otomatis dengan sistem kampus atau impor massal CSV secara manual?
