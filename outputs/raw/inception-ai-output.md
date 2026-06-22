@@ -1,91 +1,58 @@
-﻿# Project Inception: Student Task Management System
-*(Raw AI Output — belum dikoreksi oleh mahasiswa)*
-
----
+# Project Inception: Student Task Management System
 
 ## 1. Ringkasan Masalah Bisnis
+Masalah bisnis spesifik yang mendasari kebutuhan sistem ini tidak dijelaskan dalam studi kasus [OPEN QUESTION]. Namun, diasumsikan bahwa sistem administrasi tugas sebelumnya masih berjalan secara manual, tidak terintegrasi, atau kurang efisien [ASSUMPTION].
 
-Pengelolaan tugas perkuliahan di lingkungan kampus saat ini masih berlangsung secara terpisah-pisah dan tidak terstandarisasi. Dosen menyampaikan tugas melalui berbagai saluran informal seperti grup percakapan atau email, sementara pengumpulan berkas tugas oleh mahasiswa dilakukan secara manual, baik secara fisik maupun melalui platform yang tidak terintegrasi. Kondisi ini mengakibatkan dosen kesulitan memantau status pengumpulan secara terpusat, mahasiswa sering melewatkan tenggat waktu karena tidak adanya sistem pengingat yang terstruktur, dan proses penilaian memerlukan waktu yang lama karena tidak ada mekanisme pemberian umpan balik yang efisien.
-
-Selain itu, administrator kampus tidak memiliki visibilitas yang memadai atas data aktivitas akademik terkait tugas, sehingga pembuatan laporan dan audit data menjadi tidak dapat diandalkan. Ketidakterpaduan sistem yang ada meningkatkan risiko kesalahan data, kehilangan berkas, dan inefisiensi operasional yang berdampak pada kualitas proses pembelajaran secara keseluruhan.
-
----
+Hal ini diasumsikan menyulitkan pemantauan tenggat waktu, pengumpulan berkas tugas oleh mahasiswa, proses penilaian oleh dosen, serta pembuatan laporan secara terpusat [ASSUMPTION].
 
 ## 2. Pemisahan Masalah dan Solusi
-
-- **Masalah Bisnis**: Proses pengelolaan tugas perkuliahan yang tidak terintegrasi menyebabkan inefisiensi dalam distribusi tugas, pengumpulan berkas, proses penilaian, pemantauan tenggat waktu, dan pelaporan akademik. Tidak adanya sistem terpusat membuat seluruh pihak (dosen, mahasiswa, dan administrator) bekerja dengan cara dan platform yang berbeda-beda.
-
-- **Solusi yang Diusulkan**: Mengembangkan sebuah sistem manajemen tugas berbasis aplikasi digital yang menyatukan seluruh aktivitas terkait tugas perkuliahan — mulai dari pembuatan dan distribusi tugas oleh dosen, pengumpulan berkas oleh mahasiswa, proses penilaian dan pemberian umpan balik, hingga pelaporan dan audit oleh administrator — dalam satu platform terintegrasi.
-
----
+- **Masalah Bisnis**: Ketiadaan sistem terpusat yang efisien untuk mengelola tugas perkuliahan, pengumpulan berkas, proses penilaian, pemantauan tenggat waktu, dan pelaporan secara terpusat [ASSUMPTION].
+- **Solusi yang Diusulkan**: Mengembangkan Student Task Management System yang digunakan oleh dosen, mahasiswa, dan administrator untuk mengelola tugas perkuliahan, pengumpulan tugas, penilaian, tenggat waktu, dan pelaporan secara terpusat dengan memperhatikan aspek usability, security, performance, reliability, dan data integrity.
 
 ## 3. Tujuan Bisnis (Business Goals)
-
-1. **Sentralisasi Pengelolaan Tugas**: Memusatkan seluruh proses terkait tugas perkuliahan dalam satu sistem yang dapat diakses oleh semua pihak yang berwenang.
-2. **Peningkatan Efisiensi Waktu**: Mengurangi waktu yang dibutuhkan dosen untuk membuat tugas, mengumpulkan berkas, dan memberikan penilaian.
-3. **Minimalisasi Kesalahan dan Kehilangan Data**: Menghilangkan risiko kehilangan berkas tugas, duplikasi data, dan kesalahan pencatatan nilai.
-4. **Pemantauan Tenggat Waktu yang Andal**: Memastikan notifikasi dan pengingat tepat waktu terkait tenggat waktu tugas.
-5. **Pelaporan Akademik yang Terstandarisasi**: Menyediakan laporan aktivitas tugas yang akurat untuk administrator.
-
----
+1. Mengimplementasikan fitur bagi dosen untuk membuat tugas, menetapkan tenggat waktu, serta memberikan nilai dan umpan balik secara digital.
+2. Menyediakan antarmuka bagi mahasiswa untuk melihat tugas, mengunggah berkas pengumpulan, dan memantau status serta tenggat waktu tugas mereka.
+3. Menyediakan modul manajemen bagi administrator untuk mengelola data pengguna, mata kuliah, dan konfigurasi sistem.
+4. Menjamin keandalan dan keamanan data akademik dengan memenuhi kriteria usability, security, performance, reliability, dan data integrity yang terukur [ASSUMPTION].
+5. [ASSUMPTION] Meningkatkan efisiensi waktu dosen dalam melakukan penilaian tugas perkuliahan.
 
 ## 4. Analisis Stakeholder dan Kebutuhannya
-
 ### Stakeholder Primer
-
-- **Dosen**: Membutuhkan antarmuka untuk membuat tugas secara cepat, melihat status pengumpulan real-time, memberikan nilai dan umpan balik tekstual, serta mendapatkan notifikasi keterlambatan mahasiswa.
-- **Mahasiswa**: Membutuhkan dashboard daftar tugas dengan sisa tenggat waktu, fasilitas unggah berkas (PDF dan ZIP), bukti tanda terima digital, pengingat otomatis, dan antarmuka yang ramah perangkat mobile.
-- **Administrator**: Membutuhkan modul pengelolaan pengguna dan mata kuliah yang dapat dikonfigurasi tanpa coding, log aktivitas untuk audit, dan kemampuan impor data massal via CSV.
+- **Dosen**: Membutuhkan kemampuan membuat tugas, menetapkan deadline, dan memberikan nilai serta umpan balik.
+- **Mahasiswa**: Membutuhkan kemampuan melihat tugas, mengumpulkan file, dan memantau status serta deadline.
+- **Administrator**: Membutuhkan kemampuan mengelola pengguna, mata kuliah, dan konfigurasi sistem.
 
 ### Stakeholder Sekunder
-
-- **Institusi/Manajemen Kampus**: Mengharapkan sistem memenuhi standar keamanan data akademik, menghasilkan laporan evaluasi proses pembelajaran, dan memiliki keandalan (uptime) tinggi.
-
----
+- **Institusi/Manajemen Kampus**: Mengharapkan sistem membantu meningkatkan integritas data akademik dan efisiensi operasional pengelolaan tugas [ASSUMPTION].
 
 ## 5. Ruang Lingkup (Scope Boundaries)
-
 - **In-Scope**:
-  - Pembuatan dan distribusi tugas oleh dosen dengan penetapan tenggat waktu.
-  - Pengumpulan berkas tugas oleh mahasiswa (format PDF dan ZIP).
-  - Pemberian nilai dan umpan balik tekstual oleh dosen.
-  - Notifikasi otomatis kepada mahasiswa sebelum tenggat waktu dan kepada dosen saat ada keterlambatan.
-  - Pengelolaan akun pengguna dan mata kuliah oleh administrator.
-  - Log aktivitas sistem untuk audit integritas data.
-  - Penutupan otomatis penerimaan tugas setelah tenggat waktu.
-  - Pembuatan laporan akademik aktivitas tugas.
-
+  - Fitur dosen: pembuatan tugas, penetapan deadline, penilaian, dan pemberian umpan balik.
+  - Fitur mahasiswa: melihat tugas, pengumpulan file tugas, pemantauan status tugas, dan pemantauan deadline tugas.
+  - Fitur administrator: pengelolaan pengguna, pengelolaan mata kuliah, dan pengelolaan konfigurasi sistem.
+  - Aspek kualitas sistem: usability, security, performance, reliability, dan data integrity.
 - **Out-of-Scope**:
-  - Fitur ruang obrolan (chat) langsung antar-pengguna.
-  - Integrasi dengan LMS eksternal pihak ketiga (Moodle, Google Classroom, dll.).
-  - Fitur ujian atau kuis online.
-  - Sistem pembayaran atau administrasi keuangan kampus.
-  - Fitur pembuatan dan pengelolaan jadwal perkuliahan.
-
----
+  - [ASSUMPTION] Integrasi otomatis dengan sistem pembayaran atau sistem keuangan kampus.
+  - [ASSUMPTION] Fitur tatap muka kelas digital (video conference) atau ruang diskusi kelompok secara langsung.
+  - [ASSUMPTION] Modul manajemen jadwal perkuliahan terperinci di luar administrasi data mata kuliah dasar.
 
 ## 6. Asumsi dan Batasan
-
 - **Asumsi**:
-  - [ASSUMPTION] Seluruh pengguna memiliki akses internet yang stabil untuk menggunakan sistem secara daring.
-  - [ASSUMPTION] Identitas pengguna dikelola secara terpusat oleh server kampus (SSO).
-  - [ASSUMPTION] Kuota penyimpanan server kampus mencukupi untuk berkas tugas selama minimal satu tahun ajaran.
-  - [ASSUMPTION] Administrator adalah satu-satunya peran yang berwenang membuat akun dosen baru dan mendaftarkan mata kuliah baru.
-  - [ASSUMPTION] Sistem tidak diwajibkan menyediakan fitur komunikasi langsung antar-pengguna.
-
+  - [ASSUMPTION] Aplikasi ini diharapkan dapat memusatkan dan mempermudah interaksi akademik terkait tugas di lingkungan kampus.
+  - [ASSUMPTION] Sistem administrasi tugas sebelumnya masih berjalan secara manual, tidak terintegrasi, atau kurang efisien, sehingga menyulitkan pemantauan tenggat waktu, pengumpulan berkas, proses penilaian, serta pembuatan laporan secara terpusat.
+  - [ASSUMPTION] Pengguna (dosen, mahasiswa, administrator) memiliki perangkat yang memadai dan akses internet untuk mengoperasikan sistem.
 - **Batasan (Constraints)**:
-  - Sistem hanya untuk tiga peran pengguna: dosen, mahasiswa, dan administrator.
-  - Sistem wajib memenuhi kriteria: usability, security, performance, reliability, dan data integrity.
-  - Fokus fungsional terbatas pada tugas, pengumpulan, penilaian, tenggat waktu, dan pelaporan.
-
----
+  - Peran pengguna dibatasi hanya untuk dosen, mahasiswa, dan administrator.
+  - Sistem harus memperhatikan usability, security, performance, reliability, dan data integrity. Namun, indikator pencapaian atau metrik spesifik untuk kriteria tersebut tidak disebutkan [OPEN QUESTION].
+  - Fokus aplikasi dibatasi hanya pada pengelolaan tugas perkuliahan, pengumpulan, penilaian, tenggat waktu, dan pelaporan.
 
 ## 7. Pertanyaan Terbuka (Open Questions)
-
-- [OPEN QUESTION] Platform apa yang digunakan — web, mobile native, atau hybrid?
-- [OPEN QUESTION] Apa metrik terukur untuk setiap kriteria kualitas non-fungsional (waktu respons, uptime, enkripsi, kapasitas)?
-- [OPEN QUESTION] Format laporan akademik apa yang diharapkan (format ekspor, periode, jenis data)?
-- [OPEN QUESTION] Berapa batas ukuran file maksimal per pengumpulan tugas?
-- [OPEN QUESTION] Format nilai apa yang digunakan (angka 0–100, huruf A–E, atau keduanya)?
-- [OPEN QUESTION] Apakah sistem harus terintegrasi dengan database akademik kampus yang sudah ada?
-- [OPEN QUESTION] Bagaimana mekanisme pendaftaran pengguna (impor CSV, sinkronisasi otomatis, atau mandiri)?
+- [OPEN QUESTION] Detail teknis mengenai platform yang digunakan (misalnya web atau mobile) dan arsitektur integrasi sistem belum ditentukan dalam studi kasus.
+- [OPEN QUESTION] Masalah bisnis spesifik yang mendasari kebutuhan sistem ini tidak dijelaskan dalam studi kasus.
+- [OPEN QUESTION] Indikator pencapaian atau metrik spesifik untuk usability, security, performance, reliability, dan data integrity tidak disebutkan.
+- [OPEN QUESTION] Format, jenis data, dan visualisasi laporan (pelaporan) yang harus dihasilkan oleh sistem tidak dijelaskan.
+- [OPEN QUESTION] Tidak disebutkan sistem operasi target, bahasa pemrograman, database, framework, atau batasan infrastruktur yang harus digunakan.
+- [OPEN QUESTION] Tidak didefinisikan batas ukuran file maksimal atau jenis/ekstensi file yang diizinkan untuk dikumpulkan oleh mahasiswa.
+- [OPEN QUESTION] Bentuk nilai (angka/huruf) dan format umpan balik dari dosen (apakah teks biasa atau berkas file) tidak dijelaskan.
+- [OPEN QUESTION] Tidak ada informasi apakah sistem harus terintegrasi dengan database mahasiswa/akademik kampus yang sudah ada (misalnya SSO atau sistem administrasi lain).
+- [OPEN QUESTION] Mekanisme pendaftaran pengguna (apakah diimpor oleh admin, sinkronisasi otomatis, atau registrasi mandiri) tidak dijelaskan.
