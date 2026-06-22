@@ -8,14 +8,11 @@ Dokumen ini berisi spesifikasi deskripsi Use Case untuk Student Task Management 
 
 ```plantuml
 @startuml
-left to right direction
-skinparam packageStyle rectangle
+actor Dosen
+actor Mahasiswa
+actor Administrator
 
-actor "Dosen" as dosen
-actor "Mahasiswa" as mahasiswa
-actor "Administrator" as admin
-
-rectangle "Student Task Management System" {
+package "Student Task Management System" {
   usecase "UC-01: Membuat Tugas Baru" as UC01
   usecase "UC-02: Memantau Status Pengumpulan" as UC02
   usecase "UC-03: Memberikan Nilai & Umpan Balik" as UC03
@@ -28,18 +25,18 @@ rectangle "Student Task Management System" {
   usecase "UC-10: Memantau Log Aktivitas" as UC10
 }
 
-dosen --> UC01
-dosen --> UC02
-dosen --> UC03
+Dosen --> UC01
+Dosen --> UC02
+Dosen --> UC03
 
-mahasiswa --> UC04
-mahasiswa --> UC05
-mahasiswa --> UC07
+Mahasiswa --> UC04
+Mahasiswa --> UC05
+Mahasiswa --> UC07
 
-admin --> UC08
-admin --> UC10
+Administrator --> UC08
+Administrator --> UC10
 
-UC04 <.. UC06 : <<extend>>
+UC06 ..> UC04 : <<extend>>
 UC08 ..> UC09 : <<include>>
 @endum
 ```
