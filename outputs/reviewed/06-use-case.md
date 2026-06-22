@@ -1,135 +1,160 @@
-﻿# Use Case Description: Student Task Management System
+# Use Case Description: Student Task Management System
 
-> Diagram file: [use-case-diagram.drawio](../../diagrams/use-case-diagram.drawio)
-
-**Aktor yang Terlibat**: Dosen, Mahasiswa, Administrator
-**Jumlah Use Case**: 10 (UC-01 s.d. UC-10)
+Dokumen ini berisi spesifikasi deskripsi Use Case untuk Student Task Management System beserta kode PlantUML yang dapat diimpor langsung ke draw.io.
 
 ---
 
-## UC-01: Membuat Tugas Baru
+## Kode PlantUML (Salin ke Draw.io via Arrange -> Insert -> Advanced -> PlantUML)
+
+```plantuml
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Dosen" as dosen
+actor "Mahasiswa" as mahasiswa
+actor "Administrator" as admin
+
+rectangle "Student Task Management System" {
+  usecase "UC-01: Membuat Tugas Baru" as UC01
+  usecase "UC-02: Memantau Status Pengumpulan" as UC02
+  usecase "UC-03: Memberikan Nilai & Umpan Balik" as UC03
+  usecase "UC-04: Melihat Daftar Tugas (Dashboard)" as UC04
+  usecase "UC-05: Mengumpulkan Berkas Tugas" as UC05
+  usecase "UC-06: Menerima Notifikasi Pengingat" as UC06
+  usecase "UC-07: Melihat Nilai & Umpan Balik" as UC07
+  usecase "UC-08: Mengelola Pengguna & Mata Kuliah" as UC08
+  usecase "UC-09: Impor Data Pengguna via CSV" as UC09
+  usecase "UC-10: Memantau Log Aktivitas" as UC10
+}
+
+dosen --> UC01
+dosen --> UC02
+dosen --> UC03
+
+mahasiswa --> UC04
+mahasiswa --> UC05
+mahasiswa --> UC07
+
+admin --> UC08
+admin --> UC10
+
+UC04 <.. UC06 : <<extend>>
+UC08 ..> UC09 : <<include>>
+@endum
+```
+
+---
+
+## Daftar Use Case dan Deskripsi Tekstual
+
+### UC-01: Membuat Tugas Baru
 - **Aktor**: Dosen
-- **Prekondisi**: Dosen telah login ke sistem dan memiliki minimal satu mata kuliah aktif.
+- **Deskripsi**: Dosen membuat tugas kuliah baru yang berisi judul, instruksi deskripsi, tenggat waktu (deadline), bobot nilai persentase, dan file lampiran opsional.
+- **Prekondisi**: Dosen telah login ke sistem dan memiliki kelas mata kuliah aktif.
 - **Alur Utama**:
-  1. Dosen memilih menu "Buat Tugas Baru".
-  2. Sistem menampilkan formulir dengan kolom: judul, deskripsi, tenggat waktu, bobot nilai, dan lampiran opsional.
-  3. Dosen mengisi semua kolom wajib dan menekan "Simpan".
-  4. Sistem menyimpan tugas dan menampilkannya di dashboard mahasiswa yang terdaftar pada mata kuliah tersebut.
-- **Pascakondisi**: Tugas baru tersimpan di sistem dan terlihat oleh mahasiswa di mata kuliah terkait.
+  1. Dosen mengakses menu "Buat Tugas".
+  2. Sistem menampilkan formulir pengisian tugas.
+  3. Dosen mengisi seluruh parameter tugas (wajib mengisi judul, deadline, bobot).
+  4. Dosen menekan tombol "Submit".
+  5. Sistem menyimpan tugas ke database dan menerbitkannya ke mahasiswa.
 - **Relasi**: —
 - **FR terkait**: FR-01
 
----
-
-## UC-02: Memantau Status Pengumpulan
+### UC-02: Memantau Status Pengumpulan
 - **Aktor**: Dosen
-- **Prekondisi**: Dosen telah membuat minimal satu tugas.
+- **Deskripsi**: Dosen melihat rekap status pengumpulan tugas oleh mahasiswa untuk mata kuliah tertentu secara real-time.
+- **Prekondisi**: Tugas perkuliahan telah diterbitkan (UC-01).
 - **Alur Utama**:
-  1. Dosen membuka halaman detail tugas.
-  2. Sistem menampilkan daftar nama mahasiswa beserta status pengumpulan masing-masing (Belum / Sudah / Terlambat).
-  3. Dosen dapat memfilter tampilan berdasarkan status pengumpulan.
-- **Pascakondisi**: Dosen mengetahui siapa yang sudah dan belum mengumpulkan.
-- **FR terkait**: FR-02 (implisit dari perspektif Dosen)
+  1. Dosen memilih tugas perkuliahan tertentu pada halaman kelola tugas.
+  2. Sistem menampilkan daftar mahasiswa beserta status pengumpulan (Belum Dikumpulkan / Sudah Dikumpulkan / Terlambat).
+- **Relasi**: —
+- **FR terkait**: FR-02 (dari sudut pandang rekap dosen)
 
----
-
-## UC-03: Memberikan Nilai dan Umpan Balik
+### UC-03: Memberikan Nilai & Umpan Balik
 - **Aktor**: Dosen
-- **Prekondisi**: Mahasiswa telah mengumpulkan berkas tugas.
+- **Deskripsi**: Dosen menilai berkas tugas yang diunggah mahasiswa dengan memberikan skor angka dan catatan umpan balik.
+- **Prekondisi**: Mahasiswa telah mengunggah berkas tugas (UC-05).
 - **Alur Utama**:
-  1. Dosen membuka halaman detail pengumpulan seorang Mahasiswa.
-  2. Sistem menampilkan berkas yang diunggah beserta form penilaian.
-  3. Dosen memasukkan nilai (0–100) dan umpan balik teks, lalu menekan "Simpan Nilai".
-  4. Sistem menyimpan penilaian dan menandai pengumpulan sebagai "Dinilai".
-- **Pascakondisi**: Nilai tersimpan dan Mahasiswa dapat melihatnya di halaman detail tugas.
-- **FR terkait**: FR-07, FR-08
+  1. Dosen memilih tugas mahasiswa yang sudah dikumpulkan.
+  2. Dosen memeriksa berkas tugas.
+  3. Dosen memasukkan nilai (0-100) dan umpan balik teks.
+  4. Dosen menekan "Simpan Penilaian".
+  5. Sistem mencatat nilai dan mengubah status tugas menjadi "Dinilai".
+- **Relasi**: —
+- **FR terkait**: FR-07
 
----
-
-## UC-04: Melihat Daftar Tugas (Dashboard)
+### UC-04: Melihat Daftar Tugas (Dashboard)
 - **Aktor**: Mahasiswa
-- **Prekondisi**: Mahasiswa telah login ke sistem.
+- **Deskripsi**: Mahasiswa memantau seluruh daftar tugas kuliah aktif, tenggat waktunya, dan status pengerjaannya melalui dashboard utama.
+- **Prekondisi**: Mahasiswa telah terautentikasi (login) ke dalam sistem.
 - **Alur Utama**:
-  1. Mahasiswa mengakses halaman utama (dashboard).
-  2. Sistem menampilkan daftar tugas aktif diurutkan berdasarkan tenggat waktu terdekat, beserta status pengumpulan.
-- **Pascakondisi**: Mahasiswa mengetahui semua tugas aktif dan prioritas mana yang harus diselesaikan.
-- **Relasi**: `<<extend>>` UC-06 (sistem dapat menampilkan pengingat)
+  1. Mahasiswa mengakses halaman dashboard.
+  2. Sistem mengambil data tugas aktif mahasiswa dan menampilkannya diurutkan berdasarkan tenggat terdekat.
+- **Relasi**: `<<extend>>` ke UC-06 (Sistem memperluas tampilan jika ada notifikasi/pengingat tugas)
 - **FR terkait**: FR-02
 
----
-
-## UC-05: Mengumpulkan Berkas Tugas
+### UC-05: Mengumpulkan Berkas Tugas
 - **Aktor**: Mahasiswa
-- **Prekondisi**: Mahasiswa telah login dan tugas masih dalam tenggat waktu aktif.
+- **Deskripsi**: Mahasiswa mengunggah berkas pengerjaan tugas (format PDF/ZIP) sebelum tenggat waktu berakhir.
+- **Prekondisi**: Mahasiswa mengakses detail tugas aktif dan batas waktu tugas belum terlampaui.
 - **Alur Utama**:
-  1. Mahasiswa membuka halaman detail tugas dan memilih "Kumpulkan Tugas".
-  2. Sistem menampilkan form unggah berkas.
-  3. Mahasiswa memilih file PDF atau ZIP dari perangkat dan menekan "Unggah".
-  4. Sistem memvalidasi format dan ukuran file.
-  5. Jika valid, sistem menyimpan berkas dan mengirim notifikasi tanda terima (UC-04 triggered).
-- **Alur Alternatif**: Jika format atau ukuran tidak valid, sistem menampilkan pesan error dan pengumpulan tidak tersimpan.
-- **Pascakondisi**: Berkas tersimpan di sistem, status pengumpulan berubah menjadi "Sudah Dikumpulkan".
+  1. Mahasiswa mengklik tombol "Kumpulkan Tugas" pada detail tugas.
+  2. Mahasiswa memilih berkas PDF atau ZIP dari penyimpanan lokal.
+  3. Mahasiswa menekan tombol "Unggah".
+  4. Sistem memvalidasi format file (BR-01) dan ukuran file.
+  5. Sistem menyimpan berkas dan menerbitkan bukti konfirmasi tanda terima digital (FR-04).
+- **Relasi**: —
 - **FR terkait**: FR-03, FR-04, BR-01, BR-02
 
----
-
-## UC-06: Menerima Notifikasi Pengingat
+### UC-06: Menerima Notifikasi Pengingat
 - **Aktor**: Mahasiswa
-- **Prekondisi**: Mahasiswa belum mengumpulkan tugas dan tenggat waktu tersisa H-3 atau H-1.
+- **Deskripsi**: Sistem mengirimkan notifikasi pengingat otomatis kepada mahasiswa pada H-3 dan H-1 sebelum deadline tugas.
+- **Prekondisi**: Mahasiswa memiliki tugas aktif yang belum dikumpulkan.
 - **Alur Utama**:
-  1. Sistem (scheduled job) memeriksa daftar tugas yang belum dikumpulkan setiap hari.
-  2. Jika ditemukan Mahasiswa yang belum mengumpulkan pada H-3 atau H-1, sistem mengirim notifikasi email dan/atau in-app.
-- **Pascakondisi**: Mahasiswa menerima pengingat dan dapat segera mengumpulkan tugasnya.
+  1. Sistem melacak secara otomatis sisa waktu pengerjaan tugas mahasiswa.
+  2. Sistem mengirim pesan pengingat otomatis via email atau notifikasi in-app pada H-3 dan H-1.
 - **Relasi**: `<<extend>>` dari UC-04
 - **FR terkait**: FR-05
 
----
-
-## UC-07: Melihat Nilai dan Umpan Balik
+### UC-07: Melihat Nilai & Umpan Balik
 - **Aktor**: Mahasiswa
-- **Prekondisi**: Dosen telah menyelesaikan penilaian pada pengumpulan Mahasiswa.
+- **Deskripsi**: Mahasiswa melihat skor hasil penilaian dan umpan balik tertulis yang diberikan oleh Dosen setelah tugas dinilai.
+- **Prekondisi**: Dosen telah menyimpan penilaian tugas (UC-03).
 - **Alur Utama**:
-  1. Mahasiswa membuka halaman detail tugas.
-  2. Sistem menampilkan nilai (0–100) dan umpan balik teks yang diberikan Dosen.
-- **Pascakondisi**: Mahasiswa mengetahui hasil penilaian dan umpan balik.
+  1. Mahasiswa membuka halaman detail tugas yang telah dikumpulkan.
+  2. Sistem menampilkan skor nilai dan catatan umpan balik dari Dosen.
+- **Relasi**: —
 - **FR terkait**: FR-08
 
----
-
-## UC-08: Mengelola Pengguna dan Mata Kuliah
+### UC-08: Mengelola Pengguna & Mata Kuliah
 - **Aktor**: Administrator
-- **Prekondisi**: Administrator telah login ke panel admin.
+- **Deskripsi**: Administrator menambah, memperbarui, atau menghapus data pengguna (dosen, mahasiswa, admin) dan mata kuliah di sistem.
+- **Prekondisi**: Administrator telah login ke dashboard admin.
 - **Alur Utama**:
-  1. Administrator mengakses menu manajemen pengguna atau mata kuliah.
-  2. Sistem menampilkan daftar pengguna/mata kuliah dengan opsi tambah, ubah, atau nonaktifkan.
-  3. Administrator melakukan perubahan dan menekan Simpan.
-  4. Sistem memperbarui data dan mencatat perubahan ke log aktivitas.
-- **Pascakondisi**: Data pengguna atau mata kuliah diperbarui.
-- **Relasi**: `<<include>>` UC-09
+  1. Administrator membuka menu Manajemen Pengguna atau Manajemen Mata Kuliah.
+  2. Administrator menambahkan atau mengubah data pada formulir yang disediakan.
+  3. Administrator menyimpan perubahan.
+- **Relasi**: `<<include>>` UC-09 (dalam kasus penambahan pengguna secara massal)
 - **FR terkait**: FR-09, FR-10
 
----
-
-## UC-09: Impor Data Pengguna via CSV
+### UC-09: Impor Data Pengguna via CSV
 - **Aktor**: Administrator
-- **Prekondisi**: Administrator memiliki file CSV berformat valid.
+- **Deskripsi**: Administrator mengunggah berkas CSV untuk mendaftarkan akun dosen dan mahasiswa secara massal.
+- **Prekondisi**: Administrator memiliki berkas CSV dengan header kolom yang valid.
 - **Alur Utama**:
-  1. Administrator memilih menu "Impor Pengguna" dan mengunggah file CSV.
-  2. Sistem memvalidasi format kolom (NIM/NIDN, Nama, Email, Peran).
-  3. Sistem membuat akun untuk setiap baris valid dan menampilkan ringkasan: "X akun berhasil, Y gagal".
-- **Alur Alternatif**: Jika kolom wajib tidak ada, sistem menolak seluruh file dengan pesan error.
-- **Pascakondisi**: Akun pengguna baru tersimpan di sistem.
+  1. Administrator memilih menu "Impor CSV".
+  2. Administrator mengunggah file CSV.
+  3. Sistem memproses file dan menambahkan data pengguna baru ke database.
 - **Relasi**: `<<include>>` dari UC-08
 - **FR terkait**: FR-09
 
----
-
-## UC-10: Memantau Log Aktivitas
+### UC-10: Memantau Log Aktivitas
 - **Aktor**: Administrator
-- **Prekondisi**: Administrator telah login ke panel admin.
+- **Deskripsi**: Administrator meninjau riwayat log aktivitas pengguna untuk menjaga audit integritas data akademik.
+- **Prekondisi**: Administrator masuk ke panel admin keamanan.
 - **Alur Utama**:
   1. Administrator membuka menu "Log Aktivitas".
-  2. Sistem menampilkan tabel log terurut terbaru terlebih dahulu, berisi: timestamp, nama pengguna, peran, jenis tindakan, dan ID objek.
-  3. Administrator dapat memfilter berdasarkan rentang tanggal atau jenis tindakan.
-- **Pascakondisi**: Administrator mendapatkan informasi audit aktivitas sistem.
+  2. Sistem menampilkan daftar entri log terurut dari yang terbaru.
+- **Relasi**: —
 - **FR terkait**: FR-10
