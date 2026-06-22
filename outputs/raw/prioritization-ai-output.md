@@ -1,58 +1,45 @@
-﻿# Negotiation and Prioritization: Student Task Management System
-*(Raw AI Output — belum dikoreksi oleh mahasiswa)*
-
----
+# Negotiation and Prioritization: Student Task Management System
 
 ## 1. Analisis Konflik Stakeholder dan Resolusi
-
-- **Konflik 1**: Dosen menginginkan kapasitas file tugas tanpa batas agar mahasiswa bebas mengumpulkan file berukuran besar (misalnya video atau dataset), sementara Administrator memiliki keterbatasan kapasitas penyimpanan server kampus.
-  - **Resolusi**: Menetapkan batas ukuran file maksimal sebesar 50 MB per pengumpulan, yang cukup untuk dokumen PDF dan arsip ZIP akademik standar, dan dapat dikonfigurasi ulang oleh Administrator jika kebutuhan berubah.
-
-- **Konflik 2**: Mahasiswa menginginkan kemampuan resubmit berkas tanpa batas untuk memastikan mereka dapat mengunggah versi terbaik, sementara Dosen menginginkan hanya satu versi pengumpulan akhir yang dinilai untuk menghindari kebingungan dalam proses penilaian.
-  - **Resolusi**: Mengizinkan resubmit sebelum tenggat waktu berakhir, namun hanya versi pengumpulan terakhir yang diperlakukan sebagai berkas resmi untuk penilaian (sesuai BR-02).
-
----
+- **Konflik 1**: Dosen menginginkan kapasitas penyimpanan file tugas tanpa batas agar mahasiswa bebas mengunggah dokumen berukuran besar, sedangkan Administrator memiliki kapasitas penyimpanan server kampus yang terbatas [ASSUMPTION].
+  - **Resolusi**: Administrator menetapkan batas ukuran file maksimal melalui panel admin secara dinamis, dengan batas awal 50 MB per file, yang dinilai mencukupi untuk file dokumen akademik [ASSUMPTION].
+- **Konflik 2**: Mahasiswa menginginkan fleksibilitas untuk dapat mengunggah berkas revisi berkali-kali sebelum tenggat waktu berakhir, sedangkan Dosen menginginkan satu berkas final per mahasiswa agar penilaian tidak membingungkan [ASSUMPTION].
+  - **Resolusi**: Mengizinkan pengunggahan berkali-kali sebelum deadline, tetapi sistem secara otomatis mengganti berkas lama dengan berkas baru sehingga hanya ada satu berkas aktif yang dinilai (sesuai BR-02).
+- **Konflik 3**: Administrator menginginkan kemudahan sinkronisasi data pengguna otomatis dari sistem kampus pusat, sedangkan tim keamanan sistem IT kampus belum memberikan kejelasan akses API [ASSUMPTION][OPEN QUESTION].
+  - **Resolusi**: Menyediakan fitur impor massal menggunakan CSV (FR-09) sebagai langkah kompromi sementara sembari menunggu akses integrasi API kampus [ASSUMPTION].
 
 ## 2. Ketergantungan Kebutuhan (Requirement Dependencies)
-
-- **FR-04** (bukti tanda terima) bergantung pada **FR-03** (unggah berkas), karena notifikasi konfirmasi hanya dapat dikirim setelah berkas berhasil diunggah.
-- **FR-05** (notifikasi pengingat) bergantung pada **FR-01** (pembuatan tugas), karena sistem hanya dapat menghitung dan mengirim pengingat setelah tenggat waktu tugas didefinisikan.
-- **FR-07** (pemberian nilai) bergantung pada **FR-03** (pengumpulan berkas), karena Dosen hanya dapat menilai setelah Mahasiswa mengunggah berkas.
-- **FR-08** (tampilkan nilai ke mahasiswa) bergantung pada **FR-07** (pemberian nilai), karena nilai hanya dapat ditampilkan setelah Dosen memberikannya.
-- **FR-09** (impor CSV) bergantung pada **FR-10** (log aktivitas) secara tidak langsung — setiap aksi impor harus tercatat di log demi integritas data.
-- **FR-06** (penutupan otomatis) bergantung pada **FR-01** (pembuatan tugas) karena waktu penutupan diambil dari tenggat waktu yang ditetapkan saat membuat tugas.
-
----
+- **FR-04 (Bukti Tanda Terima)** bergantung pada **FR-03 (Unggah Berkas)** karena bukti tanda terima digital hanya dapat dikeluarkan dan dikirim setelah mahasiswa berhasil mengunggah file tugas.
+- **FR-05 (Notifikasi Pengingat)** bergantung pada **FR-01 (Pembuatan Tugas)** karena penghitungan waktu H-3 dan H-1 pengingat membutuhkan data tenggat waktu (tanggal dan jam) tugas yang dibuat Dosen.
+- **FR-06 (Penutupan Otomatis)** bergantung pada **FR-01 (Pembuatan Tugas)** karena waktu penutupan akses unggahan didasarkan pada data tenggat waktu yang disimpan saat pembuatan tugas.
+- **FR-07 (Penilaian oleh Dosen)** bergantung pada **FR-03 (Unggah Berkas)** karena Dosen hanya dapat memasukkan nilai dan umpan balik apabila Mahasiswa telah berhasil mengumpulkan berkas tugasnya.
+- **FR-08 (Tampilan Nilai ke Mahasiswa)** bergantung pada **FR-07 (Penilaian oleh Dosen)** karena nilai dan umpan balik tidak dapat ditampilkan di halaman detail tugas mahasiswa sebelum Dosen selesai melakukan input penilaian.
+- **FR-09 (Impor Data CSV)** bergantung pada **FR-10 (Log Aktivitas)** secara tidak langsung, karena setiap penambahan pengguna secara massal harus tercatat di log audit demi integritas data akademik [ASSUMPTION].
 
 ## 3. Prioritisasi MoSCoW
-
 ### A. Must Have
-- **FR-01**: Pembuatan tugas adalah inti dari sistem; tanpa fitur ini sistem tidak memiliki fungsi apapun.
-- **FR-02**: Dashboard tugas adalah titik masuk utama Mahasiswa; sistem tidak berguna tanpa tampilan daftar tugas.
-- **FR-03**: Pengumpulan berkas adalah fungsi bisnis utama; sistem gagal memenuhi tujuannya tanpa fitur ini.
-- **FR-07**: Penilaian adalah output akhir dari proses tugas; tanpa ini siklus tugas tidak selesai.
-- **FR-06**: Penutupan otomatis memastikan integritas tenggat waktu; tanpa ini dosen harus menutup manual yang tidak efisien.
+- **FR-01**: Pembuatan tugas oleh Dosen merupakan fungsi inti; tanpa pembuatan tugas, sistem tidak dapat berjalan.
+- **FR-02**: Tampilan dashboard tugas aktif merupakan alur kerja utama bagi Mahasiswa untuk mengakses informasi tugas.
+- **FR-03**: Pengunggahan berkas tugas dalam format PDF/ZIP oleh Mahasiswa merupakan fungsi pengumpulan utama yang wajib disediakan.
+- **FR-06**: Penutupan otomatis pengumpulan tugas setelah tenggat waktu berakhir adalah kebijakan penting untuk menjaga kedisiplinan dan integritas data [ASSUMPTION].
+- **FR-07**: Penilaian numerik dan umpan balik oleh Dosen merupakan fungsionalitas inti untuk menutup alur siklus tugas perkuliahan.
 
 ### B. Should Have
-- **FR-04**: Bukti tanda terima meningkatkan kepercayaan mahasiswa terhadap sistem, namun sistem masih bisa berjalan tanpa fitur ini.
-- **FR-05**: Pengingat otomatis sangat dibutuhkan mahasiswa, namun tidak menghalangi jalannya sistem jika tidak ada.
-- **FR-08**: Tampilan nilai di sistem sangat diinginkan, tetapi dosen bisa menyampaikan nilai melalui cara lain sementara fitur ini dikembangkan.
-- **FR-10**: Log aktivitas penting untuk keamanan dan audit, namun tidak menghalangi operasional utama jika belum ada.
+- **FR-04**: Bukti tanda terima digital sangat penting dikirimkan pasca-pengunggahan tugas guna memastikan aspek data integrity dan memberikan kepastian psikologis kepada mahasiswa [ASSUMPTION], tetapi sistem masih dapat berjalan tanpanya.
+- **FR-08**: Tampilan nilai dan umpan balik di halaman tugas Mahasiswa seharusnya diimplementasikan untuk kemudahan akses informasi nilai mahasiswa secara terpusat, meskipun nilai dapat diumumkan secara manual di luar sistem sebagai alternatif sementara [ASSUMPTION].
+- **FR-10**: Log aktivitas sistem harus dicatat untuk memenuhi aspek security dan audit integritas data, tetapi secara teknis operasional transaksi tugas dasar masih dapat berjalan jika modul log ini ditunda [ASSUMPTION].
 
 ### C. Could Have
-- **FR-09**: Impor CSV mempercepat onboarding, tetapi Administrator masih dapat membuat akun satu per satu secara manual sebagai alternatif.
+- **FR-05**: Pengingat otomatis H-3 dan H-1 sangat membantu mahasiswa untuk usability, namun mahasiswa tetap dapat memantau tenggat waktu secara mandiri melalui dashboard (FR-02) [ASSUMPTION].
+- **FR-09**: Impor data massal via CSV membantu Administrator dalam operasional awal kampus, tetapi administrator masih bisa memasukkan data pengguna satu per satu secara manual sebagai fallback [ASSUMPTION].
 
 ### D. Won't Have (for this release)
-- Tidak ada FR yang dikategorikan Won't Have karena seluruh FR yang ada masih dalam ruang lingkup minimum sistem yang layak (MVP).
-
----
+- Tidak ada kebutuhan fungsional (FR) dari `03-requirements.md` yang masuk kategori Won't Have, karena kesepuluh FR tersebut dianggap sebagai ruang lingkup dasar minimum sistem yang layak rilis (MVP) [ASSUMPTION]. Namun, fitur obrolan langsung (chatting) dan integrasi SSO otomatis penuh ditunda untuk rilis saat ini [ASSUMPTION][OPEN QUESTION].
 
 ## 4. Analisis Trade-off dan Justifikasi Keputusan
-
-- **Trade-off 1**: Keamanan Data vs Kemudahan Akses
-  - Penerapan enkripsi HTTPS/TLS wajib (NFR-03) dan hashing bcrypt untuk kata sandi meningkatkan keamanan secara signifikan, namun sedikit menambah beban komputasi server dibandingkan koneksi tanpa enkripsi.
-  - **Keputusan**: Keamanan diprioritaskan karena data yang ditangani adalah data akademik sensitif (nilai, identitas mahasiswa). Beban komputasi tambahan dari TLS modern dianggap tidak signifikan pada infrastruktur server kampus yang wajar.
-
-- **Trade-off 2**: Pembatasan Format File vs Fleksibilitas Mahasiswa
-  - Membatasi format hanya PDF dan ZIP (BR-01) mengurangi fleksibilitas mahasiswa yang mungkin memiliki tugas dalam format lain (misalnya .docx atau .pptx), namun memudahkan pengelolaan dan mengurangi risiko file berbahaya.
-  - **Keputusan**: Pembatasan format dipertahankan untuk rilis pertama. Penambahan format lain (misal .docx, .xlsx) dapat dipertimbangkan pada iterasi berikutnya berdasarkan umpan balik pengguna.
+- **Trade-off 1: Keamanan Transmisi Data vs Waktu Respons Muat Halaman**
+  - Penggunaan enkripsi HTTPS/TLS 1.2+ wajib (NFR-03) melindungi data nilai akademik, namun sedikit meningkatkan waktu jabat tangan (handshake) SSL/TLS yang dapat memengaruhi performa respons halaman (NFR-01) [ASSUMPTION].
+  - **Keputusan**: Mengutamakan keamanan data (security) di atas performa respons. Keamanan transmisi dinilai krusial untuk data akademik kampus, sedangkan latensi tambahan dari TLS 1.2+ modern dianggap minimal dan tidak akan merusak batas 3 detik respons pada koneksi 10 Mbps [ASSUMPTION].
+- **Trade-off 2: Pembatasan Format Berkas (PDF/ZIP) vs Fleksibilitas Pengumpulan**
+  - Pembatasan format berkas yang ketat (BR-01) membantu Administrator menjaga kebersihan penyimpanan dan keamanan server dari eksekusi file berbahaya, namun membatasi mahasiswa jika memiliki format tugas non-dokumen (misal audio/gambar) [ASSUMPTION].
+  - **Keputusan**: Mempertahankan pembatasan format PDF dan ZIP untuk rilis awal demi menjamin aspek security dan data integrity server. Alternatif format file lain dapat direncanakan di iterasi berikutnya setelah infrastruktur pemindaian virus file siap diimplementasikan [ASSUMPTION][OPEN QUESTION].
